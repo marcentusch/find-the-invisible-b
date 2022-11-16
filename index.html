@@ -13,13 +13,13 @@
   <style>
     #butt {
       position: absolute;
-      font-size: 50px;
-      width: 100px;
-      opacity: 1;
+      font-size: 70px;
+      width: 150px;
+      opacity: 0;
     }
   </style>
   <body>
-    <div id="butt">(‿ˠ‿)</div>
+    <div id="butt" onclick="buttClick()">(‿ˠ‿)</div>
   </body>
   <script>
     let butt = document.getElementById("butt");
@@ -30,8 +30,38 @@
     butt.style.left = `${buttLeft}px`;
     butt.style.top = `${buttTop}px`;
 
-    window.addEventListener("mousemove", (e) => {
-      console.log(`${e.clientX}, ${e.clientY}`);
-    });
+    let buttState = 1;
+
+    const buttClick = () => {
+      var audio = new Audio("fart1.mp3");
+      audio.play();
+      butt.style.opacity = "1";
+      buttState = 0;
+    };
+
+    window.addEventListener(
+      "mousemove",
+      (e) => (buttState = getClosenessValue(e))
+    );
+
+    const getClosenessValue = (e) => {
+      const closenessValue =
+        Math.abs(buttLeft - e.clientX) + Math.abs(buttTop - e.clientY);
+
+      if (buttState === 0) return 0;
+      if (closenessValue < 200) return 1;
+      if (closenessValue < 400) return 2;
+      if (closenessValue < 600) return 3;
+      return 4;
+    };
+
+    window.setInterval(() => {
+      console.log(buttState);
+      if (buttState === 0) return;
+      if (buttState === 1) new Audio("bigbutt.mp3").play();
+      if (buttState === 2) new Audio("mediumlarge.mp3").play();
+      if (buttState === 3) new Audio("mediumbutt.mp3").play();
+      if (buttState === 4) new Audio("smallbutt.mp3").play();
+    }, 800);
   </script>
 </html>
